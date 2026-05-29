@@ -80,7 +80,6 @@ public static class SettingsConf
     if (app.Environment.IsDevelopment())
       app.MapOpenApi();
 
-
     app.UseHttpsRedirection();
     app.UseCors("Frontend");
     MainMdw.UseMainMdw(app);

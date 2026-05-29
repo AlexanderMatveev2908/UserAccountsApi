@@ -4,6 +4,7 @@ namespace UserAccountsApi.ConfigNS.SqlNS;
 
 public static class SqlDb
 {
+  // ? not need due use of ctx
   public static async Task Connect()
   {
     string host = EnvVarsLib.Get("DB_HOST");
