@@ -40,14 +40,13 @@ uploadParams
 
   private async static Task<CloudResultDto> UploadVideo(IFormFile file)
   {
-    var cwd = Directory.GetCurrentDirectory();
+
+    var tempDir = FilesLib.ChainCurrDir("temp");
     var fileName = FilesLib.MakeFilename(file);
     var tempPath = Path.Combine(
-        cwd,
-        "temp",
+        tempDir,
       fileName
     );
-    Directory.CreateDirectory(Path.GetDirectoryName(tempPath)!);
 
     using (var stream = new FileStream(tempPath, FileMode.Create))
     {

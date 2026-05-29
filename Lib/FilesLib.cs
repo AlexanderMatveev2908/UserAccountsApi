@@ -14,4 +14,16 @@ public static class FilesLib
 
     return fileName;
   }
+
+  public static string ChainCurrDir(string folderName)
+  {
+    var cwd = Directory.GetCurrentDirectory();
+    var chained = Path.Combine(
+        cwd,
+        folderName
+    );
+    Directory.CreateDirectory(Path.GetDirectoryName(chained)!);
+
+    return chained;
+  }
 }
