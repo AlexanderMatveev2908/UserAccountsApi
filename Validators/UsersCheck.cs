@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using UserAccountsApi.LibNS;
 using UserAccountsApi.TypesNS;
 
 namespace UserAccountsApi.ValidatorsNS;
@@ -8,21 +10,13 @@ public static class UsersCheck
   public static async Task<IResult?> Check(HttpContext ctx)
   {
     if (!ctx.Request.HasJsonContentType())
-      return Results.Json(new
-      {
-        status = 415,
-        message = "Content-Type must be application/json"
-      }, statusCode: 415);
+      return Res.Json(415, "Content-Type must be application/json");
 
 
     UsersDto? dto = await ctx.Request.ReadFromJsonAsync<UsersDto>();
 
     if (dto is null)
-      return Results.Json(new
-      {
-        status = 400,
-        message = "Invalid JSON body"
-      }, statusCode: 400);
+      return Res.Json(400, "Invalid JSON body");
 
     List<ValidationResult> errors = new();
     ValidationContext validationContext = new(dto);
@@ -35,16 +29,14 @@ public static class UsersCheck
         );
 
     if (!isValid)
-      return Results.Json(new
+      return Res.Json(400, "Invalid user data", new
       {
-        status = 400,
-        message = "Invalid user data",
         errors = errors.Select(e => new
         {
           field = e.MemberNames.FirstOrDefault(),
           error = e.ErrorMessage
         })
-      }, statusCode: 400);
+      });
 
     ctx.Items["user"] = dto;
 

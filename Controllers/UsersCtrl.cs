@@ -16,9 +16,7 @@ public static class UsersCtrl
   {
 
     if (ctx.Items["user"] is not UsersDto user)
-      return Results.Json(
-          new { msg = "User not found in context", status = 500 }, statusCode: 500
-      );
+      return Res.Json(500, "User not found in context");
 
     Users createdUser = null!;
 
@@ -40,12 +38,10 @@ public static class UsersCtrl
           trx
       );
 
-        return Results.Json(new
+        return Res.Json(201, "User created", new
         {
-          msg = "User posted",
-          status = 201,
-          user = createdUser
-        }, statusCode: 201);
+          createdUser
+        });
       });
   }
 
@@ -63,16 +59,8 @@ public static class UsersCtrl
     Console.WriteLine(user);
 
     if (user is null)
-    {
-      return Results.Json(
-          new
-          {
-            message = "User not found",
-            status = 404
-          },
-          statusCode: 404
-      );
-    }
+      return Res.Json(404, "User not found");
+
 
     db.Users.Remove(user);
 

@@ -1,3 +1,4 @@
+using UserAccountsApi.LibNS;
 using UserAccountsApi.ServicesNS.RedisNS;
 
 namespace UserAccountsApi.FilterNS.RateLimitNS;
@@ -33,9 +34,9 @@ public sealed class RateLimitFilter : IEndpointFilter
     {
       http.Response.StatusCode = StatusCodes.Status429TooManyRequests;
 
-      return Results.Json(new
+      return Res.Json(429, "Too many requests. Try again later.",
+      new
       {
-        error = "Too many requests. Try again later.",
         retry_after_seconds = (int)ttl.Value.TotalSeconds
       });
     }
