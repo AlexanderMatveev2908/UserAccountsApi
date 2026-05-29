@@ -7,5 +7,6 @@ public static class MainRouter
     RouteGroupBuilder api = app.MapGroup("/api/v1");
 
     TestRouter.MapAPi(api);
+    CloudRouter.MapAPi(api);
   }
 }

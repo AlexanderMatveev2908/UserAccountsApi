@@ -11,7 +11,8 @@ public static class TestRouter
     {
       return Results.Json(new
       {
-        msg = "Hello World"
+        msg = "Hello World",
+        status = 200
       });
     }).WithRateLimit(
         TimeSpan.FromMinutes(5),
