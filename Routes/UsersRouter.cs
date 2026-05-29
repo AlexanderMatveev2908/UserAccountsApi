@@ -9,10 +9,7 @@ public static class UsersRouter
   public static void MapApi(RouteGroupBuilder api)
   {
     api.MapPost(
-     "/users",
-     (Delegate)(async (HttpContext ctx, SqlDbCtx db) =>
-         await UsersCtrl.PostUser(ctx, db))
- )
+     "/users", UsersCtrl.PostUser)
  .AddEndpointFilter<UsersFilter>();
   }
 }
