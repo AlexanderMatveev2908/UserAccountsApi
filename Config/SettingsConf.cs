@@ -1,5 +1,6 @@
 using UserAccountsApi.LibNS;
 using UserAccountsApi.RoutesNS;
+using UserAccountsApi.MiddlewareNS;
 
 namespace UserAccountsApi.ConfigNS;
 
@@ -40,6 +41,7 @@ public static class SettingsConf
 
     app.UseHttpsRedirection();
     app.UseCors("Frontend");
+    MainMdw.UseMainMdw(app);
 
     MainRouter.MapAPi(app);
   }

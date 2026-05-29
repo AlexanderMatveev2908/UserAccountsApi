@@ -15,6 +15,11 @@ public static class RateLimitSvc
               ctx.Connection
                   .RemoteIpAddress?.ToString()
               ?? "unknown";
+    if (ip == "::1")
+    {
+      ip = "127.0.0.1";
+    }
+
     string path =
         ctx.Request.Path;
     string method =
