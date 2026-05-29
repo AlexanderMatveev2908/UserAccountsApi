@@ -1,11 +1,19 @@
+using UserAccountsApi.ServicesNS.CLoudNS;
+
 namespace UserAccountsApi.ControllersNS.CloudNS;
 
 
 public static class CloudCtrl
 {
-  public static IResult PostFile(HttpContext ctx)
+  public static async Task<IResult> PostFile(IFormFile file)
   {
-    return Results.Json(new { msg = "File uploaded successfully", status = 201 },
-        statusCode: 201);
+    var result = await CloudSvc.UploadSingle(file);
+
+    return Results.Json(new
+    {
+      msg = "File uploaded successfully",
+      data = result
+    }, statusCode: 201);
+
   }
 }
