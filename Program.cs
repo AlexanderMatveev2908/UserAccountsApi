@@ -10,8 +10,9 @@ EnvVarsLib.CheckEnvVars();
 var builder = WebApplication.CreateBuilder(args);
 SettingsConf.ConfigureBuilder(builder);
 
-var app = builder.Build();
 await RedisConf.Connect();
+
+var app = builder.Build();
 SettingsConf.ConfigureApp(app);
 
 app.Run();

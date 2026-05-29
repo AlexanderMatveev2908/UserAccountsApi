@@ -1,3 +1,5 @@
+using UserAccountsApi.ExtensionsNS.RateLimitNS;
+
 namespace UserAccountsApi.RoutesNS;
 
 public static class TestRouter
@@ -11,6 +13,9 @@ public static class TestRouter
       {
         msg = "Hello World"
       });
-    });
+    }).WithRateLimit(
+        TimeSpan.FromMinutes(5),
+        5
+    );
   }
 }
