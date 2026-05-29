@@ -15,7 +15,7 @@ await RedisConf.Connect();
 await CloudConf.Connect();
 
 var app = builder.Build();
-SettingsConf.ConfigureApp(app);
+await SettingsConf.ConfigureApp(app);
 
 app.Run();
 
