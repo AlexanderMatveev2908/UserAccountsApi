@@ -6,6 +6,7 @@ using UserAccountsApi.ModelsNS;
 using UserAccountsApi.TypesNS;
 using Superpower.Model;
 using UserAccountsApi.ServicesNS.SqlTrxNS;
+using UserAccountsApi.LibNS;
 
 namespace UserAccountsApi.ControllersNS.UsersNS;
 
@@ -78,14 +79,10 @@ public static class UsersCtrl
     int deletedCount =
         await db.SaveChangesAsync();
 
-    return Results.Json(
-        new
-        {
-          msg = "User deleted",
-          deletedCount,
-          status = 200
-        },
-        statusCode: 200
-    );
+
+    return Res.Json(200, "User deleted", new
+    {
+      deletedCount
+    });
   }
 }
