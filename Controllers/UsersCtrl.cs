@@ -5,6 +5,7 @@ using UserAccountsApi.ConfigNS.SqlNS;
 using UserAccountsApi.ModelsNS;
 using UserAccountsApi.TypesNS;
 using Superpower.Model;
+using UserAccountsApi.ServicesNS.SqlTrxNS;
 
 namespace UserAccountsApi.ControllersNS.UsersNS;
 
@@ -14,51 +15,40 @@ public static class UsersCtrl
   {
 
     if (ctx.Items["user"] is not UsersDto user)
-    {
       return Results.Json(
           new { msg = "User not found in context", status = 500 }, statusCode: 500
       );
-    }
-    NpgsqlConnection conn =
-     (NpgsqlConnection)db.Database.GetDbConnection();
-    await conn.OpenAsync();
-    await using NpgsqlTransaction trx =
-          await conn.BeginTransactionAsync();
 
-    try
-    {
-      Users createdUser = await conn.QuerySingleAsync<Users>(
-       """
+    Users createdUser = null!;
+
+    return await SqlTrxSvc.InTrx(db, async (NpgsqlConnection conn, NpgsqlTransaction trx) =>
+      {
+        createdUser = await conn.QuerySingleAsync<Users>(
+          """
             INSERT INTO "Users" ("FirstName", "LastName", "Email", "Password")
             VALUES (@FirstName, @LastName, @Email, @Password )
             RETURNING *;
             """,
-       new
-       {
-         user.FirstName,
-         user.LastName,
-         user.Email,
-         user.Password,
-       },
-       trx
-   );
-      await trx.CommitAsync();
+          new
+          {
+            user.FirstName,
+            user.LastName,
+            user.Email,
+            user.Password,
+          },
+          trx
+      );
 
-
-      return Results.Json(new
-      {
-        msg = "User posted",
-        status = 201,
-        user = createdUser
-      }, statusCode: 201);
-    }
-    catch
-    {
-      await trx.RollbackAsync();
-      throw;
-    }
-
+        return Results.Json(new
+        {
+          msg = "User posted",
+          status = 201,
+          user = createdUser
+        }, statusCode: 201);
+      });
   }
+
+
 
 
   public static async Task<IResult> DeleteUser(
