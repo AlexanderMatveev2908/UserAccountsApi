@@ -1,27 +1,19 @@
 using UserAccountsApi.Routes;
 using DotNetEnv;
 using UserAccountsApi.Lib;
+using UserAccountsApi.Databases.RedisDbNS;
+;
 
 Env.Load();
-EnvVars.CheckEnvVars();
+EnvVarsLib.CheckEnvVars();
 
 var builder = WebApplication.CreateBuilder(args);
+SettingsLib.ConfigureBuilder(builder);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
-app.UseHttpsRedirection();
-
-MainRouter.MapAPi(app);
+await RedisDb.Connect();
+SettingsLib.ConfigureApp(app);
 
 app.Run();
 

@@ -1,6 +1,6 @@
 namespace UserAccountsApi.Lib;
 
-public static class EnvVars
+public static class EnvVarsLib
 {
   private static readonly string[] KEYS =
 {
