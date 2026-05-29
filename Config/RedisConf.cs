@@ -1,10 +1,13 @@
 using StackExchange.Redis;
-using UserAccountsApi.Lib;
+using UserAccountsApi.LibNS;
 
-namespace UserAccountsApi.Databases.RedisDbNS;
+namespace UserAccountsApi.ConfigNS.RedisNS;
 
-public static class RedisDb
+public static class RedisConf
 {
+  public static IConnectionMultiplexer Connection { get; private set; } = null!;
+
+
   public static async Task Connect()
   {
     string host = EnvVarsLib.Get("REDIS_HOST");
@@ -24,7 +27,7 @@ public static class RedisDb
       AbortOnConnectFail = false
     };
 
-    var Connection = await ConnectionMultiplexer.ConnectAsync(opt);
+    Connection = await ConnectionMultiplexer.ConnectAsync(opt);
     IDatabase db = Connection.GetDatabase();
 
     TimeSpan ping = await db.PingAsync();

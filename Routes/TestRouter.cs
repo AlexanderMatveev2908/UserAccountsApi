@@ -1,4 +1,4 @@
-namespace UserAccountsApi.Routes;
+namespace UserAccountsApi.RoutesNS;
 
 public static class TestRouter
 {

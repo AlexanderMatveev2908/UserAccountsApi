@@ -1,18 +1,18 @@
 using DotNetEnv;
-using UserAccountsApi.Lib;
-using UserAccountsApi.Databases.RedisDbNS;
-using UserAccountsApi.Config;
+using UserAccountsApi.LibNS;
+using UserAccountsApi.ConfigNS.RedisNS;
+using UserAccountsApi.ConfigNS;
+
 
 Env.Load();
 EnvVarsLib.CheckEnvVars();
 
 var builder = WebApplication.CreateBuilder(args);
-SettingsConfig.ConfigureBuilder(builder);
-
+SettingsConf.ConfigureBuilder(builder);
 
 var app = builder.Build();
-await RedisDb.Connect();
-SettingsConfig.ConfigureApp(app);
+await RedisConf.Connect();
+SettingsConf.ConfigureApp(app);
 
 app.Run();
 

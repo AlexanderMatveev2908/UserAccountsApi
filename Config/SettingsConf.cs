@@ -1,9 +1,9 @@
-using UserAccountsApi.Lib;
-using UserAccountsApi.Routes;
+using UserAccountsApi.LibNS;
+using UserAccountsApi.RoutesNS;
 
-namespace UserAccountsApi.Config;
+namespace UserAccountsApi.ConfigNS;
 
-public static class SettingsConfig
+public static class SettingsConf
 {
   public static void ConfigureBuilder(WebApplicationBuilder builder)
   {

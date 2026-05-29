@@ -1,4 +1,4 @@
-namespace UserAccountsApi.Lib;
+namespace UserAccountsApi.LibNS;
 
 public static class EnvVarsLib
 {
