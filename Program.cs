@@ -1,4 +1,9 @@
 using UserAccountsApi.Routes;
+using DotNetEnv;
+using UserAccountsApi.Lib;
+
+Env.Load();
+EnvVars.CheckEnvVars();
 
 var builder = WebApplication.CreateBuilder(args);
 
