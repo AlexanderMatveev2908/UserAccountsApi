@@ -1,3 +1,5 @@
+using UserAccountsApi.RoutesNS.UserNS;
+
 namespace UserAccountsApi.RoutesNS;
 
 public static class MainRouter
@@ -9,5 +11,6 @@ public static class MainRouter
 
     TestRouter.MapAPi(api);
     CloudRouter.MapAPi(api);
+    UsersRouter.MapApi(api);
   }
 }
