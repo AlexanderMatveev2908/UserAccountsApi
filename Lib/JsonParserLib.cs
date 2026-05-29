@@ -9,11 +9,7 @@ public static class JsonParserLib
   {
     try
     {
-      return JsonSerializer.Deserialize<T>(json,
-        new JsonSerializerOptions
-        {
-          WriteIndented = true
-        }
+      return JsonSerializer.Deserialize<T>(json
       );
     }
     catch (JsonException ex)
@@ -26,7 +22,11 @@ public static class JsonParserLib
   {
     try
     {
-      return JsonSerializer.Serialize(obj);
+      return JsonSerializer.Serialize(obj,
+       new JsonSerializerOptions
+       {
+         WriteIndented = true
+       });
     }
     catch (JsonException ex)
     {
