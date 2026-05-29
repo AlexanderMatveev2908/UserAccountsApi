@@ -11,8 +11,8 @@ using UserAccountsApi.ConfigNS.SqlNS;
 namespace UserAccountsApi.Migrations
 {
     [DbContext(typeof(SqlDbCtx))]
-    [Migration("20260529081357_init_users")]
-    partial class init_users
+    [Migration("20260529093821_marked_email_unique")]
+    partial class marked_email_unique
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,9 @@ namespace UserAccountsApi.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });

@@ -10,4 +10,12 @@ public class SqlDbCtx : DbContext
   }
 
   public DbSet<Users> Users => Set<Users>();
+  protected override void OnModelCreating(
+     ModelBuilder modelBuilder
+ )
+  {
+    modelBuilder.Entity<Users>()
+        .HasIndex(u => u.Email)
+        .IsUnique();
+  }
 }
