@@ -1,5 +1,5 @@
 using System.Text;
-using System.Text.Json;
+using UserAccountsApi.Lib;
 
 namespace UserAccountsApi.MiddlewareNS;
 
@@ -65,9 +65,7 @@ public static class LoggerMdw
 
       if (!string.IsNullOrWhiteSpace(existingJson))
       {
-        logs = JsonSerializer.Deserialize<List<object>>(
-            existingJson
-        ) ?? [];
+        logs = JsonParserLib.Parse<List<object>>(existingJson) ?? [];
       }
     }
 
@@ -89,12 +87,7 @@ public static class LoggerMdw
     List<object> logs = await ReadExistingLogs(logFilePath);
     logs.Add(logObj);
 
-    string updatedJson = JsonSerializer.Serialize(
-        logs,
-        new JsonSerializerOptions
-        {
-          WriteIndented = true
-        });
+    string updatedJson = JsonParserLib.Stringify(logs);
 
     await File.WriteAllTextAsync(
    logFilePath,
