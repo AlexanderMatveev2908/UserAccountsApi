@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using UserAccountsApi.ConfigNS.SqlNS;
 using UserAccountsApi.ModelsNS;
 using UserAccountsApi.TypesNS;
+using Superpower.Model;
 
 namespace UserAccountsApi.ControllersNS.UsersNS;
 
@@ -57,5 +58,44 @@ public static class UsersCtrl
       throw;
     }
 
+  }
+
+
+  public static async Task<IResult> DeleteUser(
+      SqlDbCtx db,
+      int userId
+  )
+  {
+    Users? user =
+        await db.Users.FindAsync(userId);
+
+    Console.WriteLine(user);
+
+    if (user is null)
+    {
+      return Results.Json(
+          new
+          {
+            message = "User not found",
+            status = 404
+          },
+          statusCode: 404
+      );
+    }
+
+    db.Users.Remove(user);
+
+    int deletedCount =
+        await db.SaveChangesAsync();
+
+    return Results.Json(
+        new
+        {
+          msg = "User deleted",
+          deletedCount,
+          status = 200
+        },
+        statusCode: 200
+    );
   }
 }

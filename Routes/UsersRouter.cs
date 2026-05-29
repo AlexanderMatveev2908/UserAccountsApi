@@ -11,5 +11,7 @@ public static class UsersRouter
     api.MapPost(
      "/users", UsersCtrl.PostUser)
  .AddEndpointFilter<UsersFilter>();
+
+    api.MapDelete("/users/{userId:int}", UsersCtrl.DeleteUser);
   }
 }
