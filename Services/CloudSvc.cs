@@ -2,7 +2,7 @@ using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using UserAccountsApi.ConfigNS.CloudNS;
 using UserAccountsApi.LibNS;
-using UserAccountsApi.Types;
+using UserAccountsApi.TypesNS;
 
 namespace UserAccountsApi.ServicesNS.CLoudNS;
 
